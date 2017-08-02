@@ -25,8 +25,8 @@ def setup():
 
 ## Resources
 
-Source code adapted from:  
+Source code adapted from:<br>
 https://gist.github.com/underdoeg/98a38b54f889fce2b237
 
-Documentation adapted from: 
+Documentation adapted from:<br>
 https://github.com/aguegu/ardulibs/tree/master/hx711
