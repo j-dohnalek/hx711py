@@ -2,16 +2,13 @@ import RPi.GPIO as GPIO
 import time
 import sys
 
-def createBoolList(size=8):
-    ret = []
-    for i in range(8):
-        ret.append(False)
-    return ret
-
 
 class HX711:
 
+    
     def __init__(self, dout, pd_sck, gain=128):
+        
+        # Set GPIO Numbering mode
         GPIO.setmode(GPIO.BCM)
 
         self.PD_SCK = pd_sck
@@ -30,6 +27,7 @@ class HX711:
 
         self.set_gain(gain);
 
+    
     def is_ready(self):
         return GPIO.input(self.DOUT) == 0
 
@@ -61,8 +59,7 @@ class HX711:
 
         return count ^ 0x800000
 
-
-
+    
     def read_average(self, times=3):
         sum = 0
         for i in range(times):
