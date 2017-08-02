@@ -1,6 +1,7 @@
 """
 HX711 Load cell amplifier Python Library
-Original: https://gist.github.com/underdoeg/98a38b54f889fce2b237
+Original source: https://gist.github.com/underdoeg/98a38b54f889fce2b237
+Documentation source: https://github.com/aguegu/ardulibs/tree/master/hx711
 Copyright (C) 2017 Jiri Dohnalek
 
 This program is free software; you can redistribute it and/or modify
