@@ -45,6 +45,7 @@ class HX711:
             elif gain is 32:
                 self.GAIN = 2
         except:
+            # Sets default GAIN
             self.GAIN = 1
 
         # Setup the gpio pin numbering system
@@ -84,26 +85,35 @@ class HX711:
         """
         Read data from the HX711 chip
         :param void
+        :return reading from the HX711
         """
 
-        # Control if the output is ready
+        # Control if the chip is ready
         while not (GPIO.input(self.DOUT) == 0):
             pass
-
-        # Original C source code ported to python as described in datasheet
+        
+        # Original C source code ported to Python as described in datasheet
         # https://cdn.sparkfun.com/datasheets/Sensors/ForceFlex/hx711_english.pdf
-        # Output matched to output on while running Arduino HX711 library example
-        # Also, behaviour matches while applying pressure
+        # Output from python matched the output of different HX711 Arduino library example
+        # Lastly, behaviour matches while applying pressure
+        # Please see page 8 of the PDF document
+        
+        GPIO.output(self.PD_SCK, True)
+        GPIO.output(self.PD_SCK, False)
         count = 0
+        
         for i in range(24):
-
             GPIO.output(self.PD_SCK, True)
             count = count << 1
             GPIO.output(self.PD_SCK, False)
             if(GPIO.input(self.DOUT)):
                 count += 1
-
-        return count ^ 0x800000
+                
+        GPIO.output(self.PD_SCK, True)
+        count = count ^ 0x800000
+        GPIO.output(self.PD_SCK, False)
+        
+        return count
 
 
     def read_average(self, times=16):
@@ -127,7 +137,7 @@ class HX711:
 
     def tare(self, times=16):
         """
-        Tare functionality
+        Tare functionality fpr calibration
         :param times: set value to calculate average
         """
         sum = self.read_average(times)
