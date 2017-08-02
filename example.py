@@ -20,7 +20,7 @@ def setup():
     code run once
     """
     hx.set_offset(`Place offset here`)
-    hx.set_scale(`Place ration here`)
+    hx.set_scale(`Place ratio here`)
     hx.tare()
     pass
 
