@@ -24,8 +24,3 @@ def setup():
     hx.tare()
     pass
 ```
-
-## Functionality
-1. Reads the load cell 
-2. Tare function
-3. Returns grams
