@@ -1,9 +1,7 @@
 # HX711PY
 Python library for the HX711 load cell amplifier and Raspberry Pi
-Original Code: https://gist.github.com/underdoeg/98a38b54f889fce2b237
 
 ## Initial Calibration
-Original from: https://github.com/aguegu/ardulibs/tree/master/hx711
 
 1. Place nothing on the scale, run the calibration.py and record the output. That is the **offset**.
 2. Place a known weight like 1kg(1000g) on the scale, record the output as **weight**.
@@ -24,3 +22,11 @@ def setup():
     hx.tare()
     pass
 ```
+
+## Resources
+
+Source code adapted from:  
+https://gist.github.com/underdoeg/98a38b54f889fce2b237
+
+Documentation adapted from: 
+https://github.com/aguegu/ardulibs/tree/master/hx711
