@@ -128,12 +128,14 @@ class HX711:
         return sum / times
 
 
-    def get_grams(times=16):
+    def get_grams(self, times=16):
         """
         :param times: set value to calculate average
         :return float weight in grams
         """
-        return self.read_average(times) - self.OFFSET
+        value = self.read_average(times) - self.OFFSET
+        grams = value / self.SCALE
+        return grams
 
 
     def tare(self, times=16):
