@@ -65,7 +65,6 @@ class HX711:
         # Power up the chip
         self.power_up()
 
-
     def set_scale(self, scale):
         """
         Set scale
@@ -73,14 +72,12 @@ class HX711:
         """
         self.SCALE = scale
 
-
     def set_offset(self, offset):
         """
         Set the offset
         :param offset: offset
         """
         self.OFFSET = offset
-
 
     def read(self):
         """
@@ -91,31 +88,31 @@ class HX711:
 
         # Control if the chip is ready
         while not (GPIO.input(self.DOUT) == 0):
-            pass
-        
+            print("No input from HX711.")
+
         # Original C source code ported to Python as described in datasheet
         # https://cdn.sparkfun.com/datasheets/Sensors/ForceFlex/hx711_english.pdf
-        # Output from python matched the output of different HX711 Arduino library example
+        # Output from python matched the output of
+        # different HX711 Arduino library example
         # Lastly, behaviour matches while applying pressure
         # Please see page 8 of the PDF document
-        
+
         GPIO.output(self.PD_SCK, True)
         GPIO.output(self.PD_SCK, False)
         count = 0
-        
+
         for i in range(24):
             GPIO.output(self.PD_SCK, True)
             count = count << 1
             GPIO.output(self.PD_SCK, False)
             if(GPIO.input(self.DOUT)):
                 count += 1
-                
+
         GPIO.output(self.PD_SCK, True)
         count = count ^ 0x800000
         GPIO.output(self.PD_SCK, False)
-        
-        return count
 
+        return count
 
     def read_average(self, times=16):
         """
@@ -127,7 +124,6 @@ class HX711:
             sum += self.read()
         return sum / times
 
-
     def get_grams(self, times=16):
         """
         :param times: set value to calculate average
@@ -137,7 +133,6 @@ class HX711:
         grams = value / self.SCALE
         return grams
 
-
     def tare(self, times=16):
         """
         Tare functionality fpr calibration
@@ -146,14 +141,12 @@ class HX711:
         sum = self.read_average(times)
         self.set_offset(sum)
 
-
     def power_down(self):
         """
         Power the chip down
         """
         GPIO.output(self.PD_SCK, False)
         GPIO.output(self.PD_SCK, True)
-
 
     def power_up(self):
         """
