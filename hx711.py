@@ -79,6 +79,18 @@ class HX711:
         """
         self.OFFSET = offset
 
+    def get_scale(self):
+        """
+        Returns value of scale
+        """
+        return self.SCALE
+
+    def get_offset(self):
+        """
+        Returns value of offset
+        """
+        return self.OFFSET
+
     def read(self):
         """
         Read data from the HX711 chip
