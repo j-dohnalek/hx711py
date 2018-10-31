@@ -50,12 +50,13 @@ def setup():
 
 
 def calibrate():
-    input("Remove any items from scale. Press any key when ready.")
+    readyCheck = input("Remove any items from scale. Press any key when ready.")
     offset = hx.read_average()
     print("Value at zero (offset): {}".format(offset))
     hx.set_offset(offset)
     print("Please place an item of known weight on the scale.")
-    input("Press any key to continue when ready.")
+
+    readyCheck = input("Press any key to continue when ready.")
     measured_weight = hx.read_average()
     item_weight = input("Please enter the item's weight in grams.\n>")
     scale = int(measured_weight)/int(item_weight)
