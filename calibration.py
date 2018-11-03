@@ -28,7 +28,8 @@ import sys
 from hx711 import HX711
 
 # Make sure you correct these to the correct pins for DOUT and SCK.
-hx = HX711(5, 6)
+# gain is set to 128 as default, change as needed.
+hx = HX711(5, 6, gain=128)
 
 
 def cleanAndExit():
