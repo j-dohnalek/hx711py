@@ -2,6 +2,7 @@
 
 Simple tests to see if the HX711 class is working properly.
 Change DOUT and SCK to match the pins on your raspberry pi.
+Uses python 3.x (python 2.7 won't work)
 """
 
 import RPi.GPIO as GPIO

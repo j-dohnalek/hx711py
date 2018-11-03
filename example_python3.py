@@ -17,6 +17,16 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License along
 with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+
+
+##################
+PYTHON 3 EXAMPLE
+
+This version of example is python 3 compatible
+and outputs weight in grams.
+
+Make sure you enter the correct values for offset and scale!
+Also, don't forget to set the correct gain, default is 128.
 """
 
 import RPi.GPIO as GPIO
@@ -29,11 +39,10 @@ hx = HX711(5, 6)
 
 
 def cleanAndExit():
-    print "Cleaning..."
+    print("Cleaning...")
     GPIO.cleanup()
-    print "Bye!"
+    print("Bye!")
     sys.exit()
-
 
 
 def setup():
@@ -43,7 +52,6 @@ def setup():
     hx.set_offset(`Place offset here`)
     hx.set_scale(`Place ratio here`)
     hx.tare()
-    pass
 
 
 def loop():
@@ -52,8 +60,8 @@ def loop():
     """
 
     try:
-        val = hx.read_average()
-        print val
+        val = hx.get_grams()
+        print(val)
 
         hx.power_down()
         time.sleep(.001)
