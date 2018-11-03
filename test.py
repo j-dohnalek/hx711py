@@ -19,7 +19,7 @@ r = input("Press enter when ready.")
 rawRead = hx.read()
 print(rawRead)
 weightOnScale = input("Enter weight on scale in grams: ")
-scale = rawRead/weightOnScale
+scale = rawRead/int(weightOnScale)
 hx.set_scale(scale)
 adjustedWeight = hx.get_grams()
 print("Weight: {}g, verify that the measured weight is correct."
