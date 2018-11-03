@@ -63,6 +63,7 @@ def calibrate():
     measured_weight = hx.read_average()
     item_weight = input("Please enter the item's weight in grams.\n>")
     scale = int(measured_weight)/int(item_weight)
+    hx.set_scale(scale)
     print("Scale adjusted for grams: {}".format(scale))
 
 
