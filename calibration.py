@@ -80,14 +80,14 @@ def loop():
                            "[1] Recalibrate.\n"
                            "[2] Display offset and scale then continue.\n"
                            "[0] Clean and exit.\n>")
-            if choice == 1:
+            if choice == "1":
                 prompt_handled = True
                 calibrate()
-            if choice == 2:
+            if choice == "2":
                 prompt_handled = True
                 print("Offset: {}\nScale: {}".format(hx.get_offset(),
                                                      hx.get_scale()))
-            if choice == 0:
+            if choice == "0":
                 prompt_handled = True
                 cleanAndExit()
             else:
