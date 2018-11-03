@@ -85,8 +85,7 @@ def loop():
                 calibrate()
             if choice == "2":
                 prompt_handled = True
-                print("Offset: {}\nScale: {}".format(hx.get_offset(),
-                                                     hx.get_scale()))
+                print("Offset: {}\nScale: {}".format(hx.get_offset(), hx.get_scale()))
             if choice == "0":
                 prompt_handled = True
                 cleanAndExit()
