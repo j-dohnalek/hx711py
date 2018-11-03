@@ -84,12 +84,12 @@ def loop():
                 prompt_handled = True
                 calibrate()
             if choice == "2":
-                prompt_handled = True
-                print("Offset: {}\nScale: {}".format(hx.get_offset(), hx.get_scale()))
+                prompt_handled = False
+                print("Offset: {}\nScale: {}\n".format(hx.get_offset(), hx.get_scale()))
             if choice == "0":
                 prompt_handled = True
                 cleanAndExit()
-            else:
+            if choice != ("0" or "1" or "2"):
                 print("Invalid selection.\n")
                 prompt_handled = False
     except (KeyboardInterrupt, SystemExit):
