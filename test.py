@@ -2,6 +2,7 @@
 
 Simple tests to see if the HX711 class is working properly.
 Change DOUT and SCK to match the pins on your raspberry pi.
+Uses python 3.x (python 2.7 won't work)
 """
 
 import RPi.GPIO as GPIO
@@ -11,7 +12,7 @@ from hx711 import HX711
 GPIO.setmode(GPIO.BCM)
 
 print("Initializing HX711")
-hx = HX711(2, 3, gain=64)
+hx = HX711(2, 3, gain=128)  # gain set to 128 as default
 offset = hx.read_average()
 hx.set_offset(offset)
 print("Place something with a known weight on the scale.")
@@ -19,7 +20,7 @@ r = input("Press enter when ready.")
 rawRead = hx.read()
 print(rawRead)
 weightOnScale = input("Enter weight on scale in grams: ")
-scale = rawRead/weightOnScale
+scale = rawRead/int(weightOnScale)
 hx.set_scale(scale)
 adjustedWeight = hx.get_grams()
 print("Weight: {}g, verify that the measured weight is correct."

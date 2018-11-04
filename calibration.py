@@ -17,6 +17,9 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License along
 with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+
+ATTENTION:
+This version runs in python 3.x (using python 2.7 will break it)
 """
 
 import RPi.GPIO as GPIO
@@ -25,7 +28,8 @@ import sys
 from hx711 import HX711
 
 # Make sure you correct these to the correct pins for DOUT and SCK.
-hx = HX711(5, 6)
+# gain is set to 128 as default, change as needed.
+hx = HX711(5, 6, gain=128)
 
 
 def cleanAndExit():
@@ -60,6 +64,7 @@ def calibrate():
     measured_weight = hx.read_average()
     item_weight = input("Please enter the item's weight in grams.\n>")
     scale = int(measured_weight)/int(item_weight)
+    hx.set_scale(scale)
     print("Scale adjusted for grams: {}".format(scale))
 
 
@@ -80,17 +85,16 @@ def loop():
                            "[1] Recalibrate.\n"
                            "[2] Display offset and scale then continue.\n"
                            "[0] Clean and exit.\n>")
-            if choice == 1:
+            if choice == "1":
                 prompt_handled = True
                 calibrate()
-            if choice == 2:
-                prompt_handled = True
-                print("Offset: {}\nScale: {}".format(hx.get_offset(),
-                                                     hx.get_scale()))
-            if choice == 0:
+            if choice == "2":
+                prompt_handled = False
+                print("Offset: {}\nScale: {}\n".format(hx.get_offset(), hx.get_scale()))
+            if choice == "0":
                 prompt_handled = True
                 cleanAndExit()
-            else:
+            if choice != ("0" or "1" or "2"):
                 print("Invalid selection.\n")
                 prompt_handled = False
     except (KeyboardInterrupt, SystemExit):
