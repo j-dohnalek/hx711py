@@ -12,7 +12,7 @@ from hx711 import HX711
 GPIO.setmode(GPIO.BCM)
 
 print("Initializing HX711")
-hx = HX711(2, 3, gain=64)
+hx = HX711(2, 3, gain=128)  # gain set to 128 as default
 offset = hx.read_average()
 hx.set_offset(offset)
 print("Place something with a known weight on the scale.")
