@@ -110,9 +110,21 @@ class HX711:
         # different HX711 Arduino library example
         # Lastly, behaviour matches while applying pressure
         # Please see page 8 of the PDF document
+        
+        # Read the first data
+        for i in range(24):
+            GPIO.output(self.PD_SCK, True)
+            count = count << 1
+            GPIO.output(self.PD_SCK, False)
+            
+        # set the channel and the gain factor for the next reading using the clock pin
+        for i in range(GAIN):
+            GPIO.output(self.PD_SCK, True)
+            GPIO.output(self.PD_SCK, False);
 
-        GPIO.output(self.PD_SCK, True)
-        GPIO.output(self.PD_SCK, False)
+        #GPIO.output(self.PD_SCK, True)
+        #GPIO.output(self.PD_SCK, False)
+        
         count = 0
 
         for i in range(24):
