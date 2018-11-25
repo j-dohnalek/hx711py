@@ -38,17 +38,6 @@ class HX711:
         self.OFFSET = 0
         self.SCALE = 1
 
-        try:
-            if gain is 128:
-                self.GAIN = 1
-            elif gain is 64:
-                self.GAIN = 3
-            elif gain is 32:
-                self.GAIN = 2
-        except:
-            # Sets default GAIN
-            self.GAIN = 1
-
         # Setup the gpio pin numbering system
         GPIO.setmode(GPIO.BCM)
 
@@ -64,6 +53,22 @@ class HX711:
 
         # Power up the chip
         self.power_up()
+        self.set_gain(gain)
+
+    def set_gain(self, gain=128):
+
+        try:
+            if gain is 128:
+                self.GAIN = 1
+            elif gain is 64:
+                self.GAIN = 3
+            elif gain is 32:
+                self.GAIN = 2
+        except:
+            self.GAIN = 1  # Sets default GAIN
+
+        GPIO.output(self.PD_SCK, False)
+        self.read()
 
     def set_scale(self, scale):
         """
@@ -111,8 +116,6 @@ class HX711:
         # Lastly, behaviour matches while applying pressure
         # Please see page 8 of the PDF document
 
-        GPIO.output(self.PD_SCK, True)
-        GPIO.output(self.PD_SCK, False)
         count = 0
 
         for i in range(24):
@@ -125,6 +128,11 @@ class HX711:
         GPIO.output(self.PD_SCK, True)
         count = count ^ 0x800000
         GPIO.output(self.PD_SCK, False)
+
+        # set channel and gain factor for next reading
+        for i in range(self.GAIN):
+            GPIO.output(self.PD_SCK, True)
+            GPIO.output(self.PD_SCK, False)
 
         return count
 
