@@ -59,13 +59,13 @@ class HX711:
 
         try:
             if gain is 128:
-                self.GAIN = 1
-            elif gain is 64:
                 self.GAIN = 3
-            elif gain is 32:
+            elif gain is 64:
                 self.GAIN = 2
+            elif gain is 32:
+                self.GAIN = 1
         except:
-            self.GAIN = 1  # Sets default GAIN
+            self.GAIN = 3  # Sets default GAIN at 128
 
         GPIO.output(self.PD_SCK, False)
         self.read()
