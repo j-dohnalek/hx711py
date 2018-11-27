@@ -18,14 +18,33 @@ You should have received a copy of the GNU General Public License along
 with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-ATTENTION:
-This version runs in python 3.x (using python 2.7 will break it)
+######################################################################
+README:
+
+This version runs in python 3.x. It will first prompt the user to 
+empty the scale. Then prompt user to place an item with a known weight
+on the scale and input weight as INT. 
+
+The offset and scale will be adjusted accordingly and displayed for
+convenience.
+
+The user can choose to [0] exit, [1] recalibrate, or [2] display the 
+current offset and scale values and weigh a new item to test the accuracy
+of the offset and scale values!
+#######################################################################
 """
 
 import RPi.GPIO as GPIO
 import time
 import sys
 from hx711 import HX711
+
+# Force Python 3 ###########################################################
+
+if sys.version_info[0] != '3':
+    raise Exception("Python 3 is required.")
+
+############################################################################
 
 # Make sure you correct these to the correct pins for DOUT and SCK.
 # gain is set to 128 as default, change as needed.
