@@ -146,14 +146,23 @@ class HX711:
             sum += self.read()
         return sum / times
 
-    def get_grams(self, times=16):
+    def get_grams(self):
+        """
+        Computationally quicker than average, but can vary more.
+        :return float weight in grams
+        """
+        value = (self.read() - self.OFFSET)
+        grams = (value / self.SCALE)
+        return grams
+
+    def get_grams_average(self, times=16):
         """
         :param times: set value to calculate average
         :return float weight in grams
         """
         value = self.read_average(times) - self.OFFSET
-        grams = value / self.SCALE
-        return grams
+        grams_average = value / self.SCALE
+        return grams_average
 
     def tare(self, times=16):
         """
