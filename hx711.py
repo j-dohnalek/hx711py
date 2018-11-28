@@ -59,13 +59,13 @@ class HX711:
 
         try:
             if gain is 128:
-                self.GAIN = 1
-            elif gain is 64:
                 self.GAIN = 3
-            elif gain is 32:
+            elif gain is 64:
                 self.GAIN = 2
+            elif gain is 32:
+                self.GAIN = 1
         except:
-            self.GAIN = 1  # Sets default GAIN
+            self.GAIN = 3  # Sets default GAIN at 128
 
         GPIO.output(self.PD_SCK, False)
         self.read()
@@ -148,11 +148,13 @@ class HX711:
 
     def get_grams(self, times=16):
         """
-        :param times: set value to calculate average
+        :param times: Set value to calculate average, 
+        be aware that high number of times will have a 
+        slower runtime speed.        
         :return float weight in grams
         """
-        value = self.read_average(times) - self.OFFSET
-        grams = value / self.SCALE
+        value = (self.read_average(times) - self.OFFSET)
+        grams = (value / self.SCALE)
         return grams
 
     def tare(self, times=16):

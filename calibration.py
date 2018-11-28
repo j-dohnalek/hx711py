@@ -18,14 +18,33 @@ You should have received a copy of the GNU General Public License along
 with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-ATTENTION:
-This version runs in python 3.x (using python 2.7 will break it)
+######################################################################
+README:
+
+This version runs in python 3.x. It will first prompt the user to 
+empty the scale. Then prompt user to place an item with a known weight
+on the scale and input weight as INT. 
+
+The offset and scale will be adjusted accordingly and displayed for
+convenience.
+
+The user can choose to [0] exit, [1] recalibrate, or [2] display the 
+current offset and scale values and weigh a new item to test the accuracy
+of the offset and scale values!
+#######################################################################
 """
 
 import RPi.GPIO as GPIO
 import time
 import sys
 from hx711 import HX711
+
+# Force Python 3 ###########################################################
+
+if sys.version_info[0] != '3':
+    raise Exception("Python 3 is required.")
+
+############################################################################
 
 # Make sure you correct these to the correct pins for DOUT and SCK.
 # gain is set to 128 as default, change as needed.
@@ -61,7 +80,7 @@ def calibrate():
     print("Please place an item of known weight on the scale.")
 
     readyCheck = input("Press any key to continue when ready.")
-    measured_weight = hx.read_average()
+    measured_weight = (hx.read_average()-hx.get_offset())
     item_weight = input("Please enter the item's weight in grams.\n>")
     scale = int(measured_weight)/int(item_weight)
     hx.set_scale(scale)
@@ -73,30 +92,26 @@ def loop():
     code run continuously
     """
     try:
-        val = hx.get_grams()
-        hx.power_down()
-        time.sleep(.001)
-        hx.power_up()
-
-        print("Item weighs {} grams.".format(val))
         prompt_handled = False
         while not prompt_handled:
+            val = hx.get_grams()
+            hx.power_down()
+            time.sleep(.001)
+            hx.power_up()
+            print("Item weighs {} grams.\n".format(val))
             choice = input("Please choose:\n"
                            "[1] Recalibrate.\n"
-                           "[2] Display offset and scale then continue.\n"
+                           "[2] Display offset and scale and weigh an item!\n"
                            "[0] Clean and exit.\n>")
             if choice == "1":
-                prompt_handled = True
                 calibrate()
-            if choice == "2":
-                prompt_handled = False
-                print("Offset: {}\nScale: {}\n".format(hx.get_offset(), hx.get_scale()))
-            if choice == "0":
+            elif choice == "2":
+                print("\nOffset: {}\nScale: {}".format(hx.get_offset(), hx.get_scale()))
+            elif choice == "0":
                 prompt_handled = True
                 cleanAndExit()
-            if choice != ("0" or "1" or "2"):
+            else:
                 print("Invalid selection.\n")
-                prompt_handled = False
     except (KeyboardInterrupt, SystemExit):
         cleanAndExit()
 
