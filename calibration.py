@@ -41,7 +41,7 @@ from hx711 import HX711
 
 # Force Python 3 ###########################################################
 
-if sys.version_info[0] != '3':
+if sys.version_info[0] != 3:
     raise Exception("Python 3 is required.")
 
 ############################################################################
