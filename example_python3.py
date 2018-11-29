@@ -36,7 +36,7 @@ from hx711 import HX711
 
 # Force Python 3 ###########################################################
 
-if sys.version_info[0] != '3':
+if sys.version_info[0] != 3:
     raise Exception("Python 3 is required.")
 
 ############################################################################
@@ -58,7 +58,6 @@ def setup():
     """
     hx.set_offset(`Place offset here`)
     hx.set_scale(`Place ratio here`)
-    hx.tare()
 
 
 def loop():
